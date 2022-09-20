@@ -1,0 +1,1 @@
+rootProject.name = "com.ikwost.alertstate-server-ktor"
