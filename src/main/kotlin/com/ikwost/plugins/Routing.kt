@@ -24,4 +24,4 @@ fun Application.configureRouting() {
         unauthorizedRoute()
     }
     }
-}
+
