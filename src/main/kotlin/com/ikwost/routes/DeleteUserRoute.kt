@@ -4,6 +4,8 @@ import com.ikwost.domain.model.ApiResponse
 import com.ikwost.domain.model.Endpoint
 import com.ikwost.domain.model.UserSession
 import com.ikwost.domain.repository.UserDataSource
+import com.ikwost.util.Constants
+import com.ikwost.util.Constants.AUTHENTICATION_PROVIDER_NAME
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -16,7 +18,7 @@ fun Route.deleteUserRoute(
     app: Application,
     userDataSource: UserDataSource
 ) {
-    authenticate("auth-session") {
+    authenticate(AUTHENTICATION_PROVIDER_NAME) {
         delete(Endpoint.DeleteUser.path) {
             val userSession = call.principal<UserSession>()
             if (userSession == null) {

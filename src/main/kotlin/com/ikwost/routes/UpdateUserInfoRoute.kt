@@ -5,6 +5,8 @@ import com.ikwost.domain.model.Endpoint
 import com.ikwost.domain.model.UserSession
 import com.ikwost.domain.model.UserUpdate
 import com.ikwost.domain.repository.UserDataSource
+import com.ikwost.util.Constants
+import com.ikwost.util.Constants.AUTHENTICATION_PROVIDER_NAME
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -17,7 +19,7 @@ fun Route.updateUserRoute(
     app: Application,
     userDataSource: UserDataSource
 ) {
-    authenticate("auth-session") {
+    authenticate(AUTHENTICATION_PROVIDER_NAME) {
         put(Endpoint.UpdateUserInfo.path) {
             val userSession = call.principal<UserSession>()
             val userUpdate = call.receive<UserUpdate>()

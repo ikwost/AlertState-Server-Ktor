@@ -5,6 +5,7 @@ import com.ikwost.domain.model.Endpoint
 import com.ikwost.domain.model.UserSession
 import com.ikwost.domain.repository.UserDataSource
 import com.ikwost.util.Constants
+import com.ikwost.util.Constants.AUTHENTICATION_PROVIDER_NAME
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -15,7 +16,7 @@ fun Route.getUserInfoRoute(
     app: Application,
     userDataSource: UserDataSource
 ) {
-    authenticate(Constants.AUTHENTICATION_PROVIDER_NAME) {
+    authenticate(AUTHENTICATION_PROVIDER_NAME) {
         get(Endpoint.GetUserInfo.path) {
             val userSession = call.principal<UserSession>()
             if (userSession == null) {
