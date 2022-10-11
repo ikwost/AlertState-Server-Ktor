@@ -37,10 +37,10 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 
-
+    //KMongo
     implementation("org.litote.kmongo:kmongo-async:$kmongo_version" )
     implementation("org.litote.kmongo:kmongo-coroutine-serialization:$kmongo_version")
-
+    //Koin
     implementation ("io.insert-koin:koin-core:$koin_version")
     implementation ("io.insert-koin:koin-ktor:$koin_version")
     implementation ("io.insert-koin:koin-logger-slf4j:$koin_version")
