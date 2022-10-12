@@ -7,5 +7,5 @@ import kotlinx.serialization.Serializable
 data class UserLocation(
     val lat: Long,
     val lng: Long,
-    val user: User
+    val userId: String
 )
