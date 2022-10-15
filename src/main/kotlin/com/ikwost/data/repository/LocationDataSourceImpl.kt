@@ -3,13 +3,19 @@ package com.ikwost.data.repository
 import com.ikwost.data.model.UserLocation
 import com.ikwost.domain.model.User
 import com.ikwost.domain.repository.LocationDataSource
+import org.litote.kmongo.coroutine.CoroutineDatabase
 
-class LocationDataSourceImpl:LocationDataSource {
-    override suspend fun gelAllLocations(): Map<User, UserLocation> {
-        TODO("Not yet implemented")
+class LocationDataSourceImpl(
+    private val db: CoroutineDatabase
+) : LocationDataSource {
+
+    private val userLocations = db.getCollection<UserLocation>()
+    override suspend fun gelAllLocations(): List<UserLocation> {
+        return userLocations.find()
+            .toList()
     }
 
     override suspend fun insertLocation(userLocation: UserLocation) {
-        TODO("Not yet implemented")
+        userLocations.insertOne(userLocation)
     }
 }
