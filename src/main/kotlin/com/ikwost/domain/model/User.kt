@@ -1,6 +1,7 @@
 package com.ikwost.domain.model
 
 import kotlinx.serialization.Serializable
+import org.bson.codecs.pojo.annotations.BsonId
 
 @Serializable
 data class User(

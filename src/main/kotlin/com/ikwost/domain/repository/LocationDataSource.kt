@@ -8,4 +8,6 @@ interface LocationDataSource {
     suspend fun gelAllLocations(): List<UserLocation>
 
     suspend fun insertLocation(userLocation: UserLocation)
+
+    suspend fun replaceLocation(userId: String, userLocation: UserLocation)
 }
