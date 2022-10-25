@@ -16,7 +16,6 @@ import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.serialization.json.Json
 
 fun Route.mapSocket(
     app: Application,
@@ -24,7 +23,8 @@ fun Route.mapSocket(
     userDataSource: UserDataSource
 ) {
     authenticate(AUTHENTICATION_PROVIDER_NAME) {
-        webSocket("/map-socket") {
+        //TODO to Constant
+        webSocket(Endpoint.MapWebSocket.path) {
             val userSession = call.principal<UserSession>()
             if (userSession == null) {
                 close()
@@ -44,6 +44,7 @@ fun Route.mapSocket(
                         ),
                         status = HttpStatusCode.OK
                     )
+
                     incoming.consumeEach { frame ->
                         if (frame is Frame.Text) {
                             mapRoomController.sendLocation(
@@ -63,8 +64,36 @@ fun Route.mapSocket(
                     mapRoomController.tryDisconnect(userSession.name)
                 }
             }
+        }
+    }
+}
 
+fun Route.getAllLocations(
+    app: Application,
+    mapRoomController: MapRoomController
+) {
+    authenticate(AUTHENTICATION_PROVIDER_NAME) {
+        //TODO to Constant
+        get(Endpoint.GetAllLocations.path) {
+            val userSession = call.principal<UserSession>()
+            if (userSession == null) {
+                app.log.info("INVALID SESSION")
+                call.respondRedirect(Endpoint.Unauthorized.path)
+            } else {
+                try {
+                    call.respond(
+                        message = ApiResponse(
+                            success = true,
+                            locations = mapRoomController.getAllLocations()
+                        ),
+                        status = HttpStatusCode.OK
+                    )
 
+                } catch (e: Exception) {
+                    app.log.info("GETTING GET ALL LOCATIONS ERROR: ${e.message}")
+                    call.respondRedirect(Endpoint.Unauthorized.path)
+                }
+            }
         }
     }
 }

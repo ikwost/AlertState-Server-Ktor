@@ -1,7 +1,11 @@
 package com.ikwost.di
 
+import com.ikwost.data.repository.LocationDataSourceImpl
 import com.ikwost.data.repository.UserDataSourceImpl
+import com.ikwost.domain.MapRoomController
+import com.ikwost.domain.repository.LocationDataSource
 import com.ikwost.domain.repository.UserDataSource
+import com.ikwost.util.Constants.DATABASE_LOCATION
 import com.ikwost.util.Constants.DATABASE_USER
 import org.koin.dsl.module
 import org.litote.kmongo.coroutine.coroutine
@@ -15,5 +19,18 @@ val koinModule = module {
     }
     single<UserDataSource> {
         UserDataSourceImpl(get())
+    }
+   }
+val koinModule2 = module {
+    single {
+        KMongo.createClient()
+            .coroutine
+            .getDatabase(DATABASE_LOCATION)
+    }
+    single<LocationDataSource> {
+        LocationDataSourceImpl(get())
+    }
+    single {
+        MapRoomController(get())
     }
 }
