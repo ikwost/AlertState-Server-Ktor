@@ -6,4 +6,6 @@ object Constants {
     const val ISSUER = "https://accounts.google.com"
     const val DATABASE_USER = "user_database"
     const val DATABASE_LOCATION = "location_database"
+    const val USER_QUALIFIER = "user-user"
+    const val LOCATION_QUALIFIER = "location-location"
 }
